@@ -584,3 +584,10 @@ Recarregar no navegador:
 ```
 http://localhost:9000/react-multiples
 ``` 
+
+Um ponto muito IMPORTANTE é não esquecermos do basename no arquivo de rotas, porque sabemos que temos `react-multiples/about` e não apenas `/about` por exemplo e assim por diante.
+
+```
+<BrowserRouter basename="react-multiples">
+```
+

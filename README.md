@@ -573,3 +573,14 @@ const lifecycles = singleSpaReact({
 export const { bootstrap, mount, unmount } = lifecycles;
 ```
 
+Vamos iniciar novamente a nossa aplicação:
+
+```
+npm start -- --port 8500
+```
+
+Recarregar no navegador:
+
+```
+http://localhost:9000/react-multiples
+``` 

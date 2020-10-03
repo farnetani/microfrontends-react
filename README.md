@@ -394,3 +394,25 @@ Devemos ter o seguinte resultado:
 ```
 @mc/react-multiples is mounted!
 ```
+
+
+Vamos parar a aplicação do nosso microfrontend que está rodando na porta `8500` e instalar a `react-router-dom`
+
+```
+raiz do projeto
+cd react-multiples
+npm i react-router-dom
+```
+
+Vamos apagar os arquivos desnecessários da aplicação:
+
+```
+.eslintrc
+.prettierignore
+jest.config.js
+src/root.component.js
+src/root.component.test.js
+set-public-path.js
+```
+
+

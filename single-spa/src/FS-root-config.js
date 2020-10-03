@@ -31,6 +31,12 @@ registerApplication(
   location => location.pathname.startsWith('/react-multiples'),
 );
 
+registerApplication(
+  '@mc/react-parcel',
+  () => System.import('@mc/react-parcel'),
+  location => location.pathname.startsWith('/react-parcel'),
+);
+
 start({
   urlRerouteOnly: true,
 });

@@ -603,3 +603,142 @@ Outro ponto importante é alimentar as Rotas com `exact`, para que não carregue
 Explicação em [https://youtu.be/68LaXOWwxZI?t=1871](https://youtu.be/68LaXOWwxZI?t=1871)
 
 
+## Exemplo-04-parcel (a hora e agora)
+
+[https://youtu.be/68LaXOWwxZI?t=2014](https://youtu.be/68LaXOWwxZI?t=2014)
+
+Vamos criar mais um projeto:
+
+```
+npx create-single-spa
+    	react-parcel
+        single-spa application / parcel
+        react
+        npm
+        No
+        mc
+        react-parcel
+```
+
+Uma vez instalado, anotar os dados da url
+
+```
+cd react-parcel
+1. Run 'npm start -- --port 8500'
+2. Go to http://single-spa-playground.org/playground/instant-test?name=@mc/react-parcel&url=8500 to see it working!
+
+O resultado deverá ser: 
+@mc/react-parcel is mounted!
+```
+
+- `index.ejs` do nosso orquestrador:
+
+```js{8}
+  <% if (isLocal) { %>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@FS/root-config": "//localhost:9000/FS-root-config.js",
+        "@mc/react-single": "//localhost:8500/mc-react-single.js",
+        "@mc/react-multiples": "//localhost:8500/mc-react-multiples.js",
+        "@mc/react-parcel": "//localhost:8500/mc-react-parcel.js"
+      }
+    }
+  </script>
+  <% } %>
+```
+- Registrar a aplicação no nosso `FS-root-config`
+
+```js
+registerApplication(
+  '@mc/react-parcel',
+  () => System.import('@mc/react-parcel'),
+  location => location.pathname.startsWith('/react-parcel'),
+);
+```
+
+Rodando no navegador: `http://localhost:9000/react-parcel` deveremos ter o result abaixo:
+
+```
+@mc/react-parcel is mounted!
+```
+
+Vamos apagar os arquivos de costume do nosso microfrontend:
+
+```
+.eslintrc
+.prettierignore
+jest.config.js
+src/root.component.js
+src/root.component.test.js
+set-public-path.js
+```
+
+Criar o arquivo `App.js`
+
+```js
+import React, { useState, useEffect } from 'react'
+import { listenEvent } from '@mc/utils'
+
+const App = () => {
+  const [tasks, updateTasks] = useState([])
+
+  useEffect(() => {
+    listenEvent('@mc/react-route/todo/add-task', event => {
+      updateTasks(oldTasks => [
+        ...oldTasks,
+        event.detail,
+      ])
+    })
+  }, [])
+
+  return (
+    <>
+      <h1>@mc/react-parcel</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Task</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tasks.map(task => (
+            <tr key={task.id}>
+              <td>{task.id}</td>
+              <td>{task.describe}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  )
+}
+
+export default App
+```
+
+Abrir o `mc-react-parcel.js` e remover a linha 1 e editar a linha 5 e 10, deixando o código como abaixo:
+
+```js{4,9}
+import React from "react";
+import ReactDOM from "react-dom";
+import singleSpaReact from "single-spa-react";
+import App from "./App";
+
+const lifecycles = singleSpaReact({
+  React,
+  ReactDOM,
+  rootComponent: App,
+  errorBoundary(err, info, props) {
+    // Customize the root error boundary for your microfrontend here.
+    return null;
+  },
+});
+
+export const { bootstrap, mount, unmount } = lifecycles;
+```
+
+
+
+

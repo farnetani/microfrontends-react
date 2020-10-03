@@ -1,6 +1,8 @@
 # Passo a Passo
 
-1. Criar o orquestrador. 
+## Ambiente Inicial (orquestrador)
+
+Vamos criar o orquestrador, para isso, basta executar o compando npx abaixo:
 
 ```
 npx create-single-spa
@@ -20,7 +22,9 @@ npm start
 Abrir navegador: http://localhost:9000
 ```
 
-Instalar uma aplicação React
+## Exemplo 01
+
+Instalar uma aplicação do tipo `single-spa` com `React`, para isso ireos usar o comando (`npx create-single-spa`) e passar os parametros conforme abaixo:
 
 ```
 npx create-single-spa
@@ -234,6 +238,8 @@ describe("Root component", () => {
 });
 ```
 
+## Exemplo-02
+
 Agora, poderemos deletar os arquivos abaixo do nosso `react-single`:
 
 ```
@@ -311,4 +317,41 @@ export default App
 ```
 
 Se testarmos a nossa aplicação através da URL: ``, veremos um Counter com a função Decrement e Increment.
+
+## Exemplo-03
+
+Video no momento do start: [https://youtu.be/68LaXOWwxZI?t=1627](https://youtu.be/68LaXOWwxZI?t=1627)
+
+Vamos criar outra aplicação do tipo `single-spa`, só que agora com rotas, então devemos voltar na raiz do projeto e rodar o comando:
+
+```
+npx create-single-spa
+    react-multiples
+    single-spa application / parcel
+    react
+    npm
+    No
+    mc
+    react-multiples
+```
+
+Devemos anotar a url do playground para teste:
+
+```
+1. Run 'npm start -- --port 8500'
+2. Go to http://single-spa-playground.org/playground/instant-test?name=@mc/react-multiples&url=8500 to see it working!
+```
+
+Então para testarmos, devemos entrar na pasta `react-multiples` do projeto criado e executar:
+```
+npm start -- --port 8500
+e abrir no navegador a url: http://single-spa-playground.org/playground/instant-test?name=@mc/react-multiples&url=8500
+```
+
+E tereos algo como:
+
+```
+@mc/react-multiples is mounted!
+```
+
 

@@ -591,3 +591,11 @@ Um ponto muito IMPORTANTE é não esquecermos do basename no arquivo de rotas, p
 <BrowserRouter basename="react-multiples">
 ```
 
+Um outro ponto importante é sempre usar no nosso `root-config.js` a propriedade startsWith ou no modelo antigo trocar para array da propriedade `activeWhen`, pois não teremos apenas a rota `react-multiples`, mas sim `react-multiples/algumacoisa`:
+
+```
+location => location.pathname.startsWith('/react-multiples') ou no modelo antigo, devemos usar um array, assim:
+
+activeWhen: ['/react-multiples'],
+```
+

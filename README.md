@@ -599,3 +599,7 @@ location => location.pathname.startsWith('/react-multiples') ou no modelo antigo
 activeWhen: ['/react-multiples'],
 ```
 
+Outro ponto importante é alimentar as Rotas com `exact`, para que não carregue sempre o / = home.
+Explicação em [https://youtu.be/68LaXOWwxZI?t=1871](https://youtu.be/68LaXOWwxZI?t=1871)
+
+

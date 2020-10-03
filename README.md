@@ -415,4 +415,161 @@ src/root.component.test.js
 set-public-path.js
 ```
 
+Devemos criar a seguinte estrutura:
+
+```
+src
+│   mc-react-multiples.js
+│
+├───components
+│   Root.js
+│   Routes.js
+│
+├───layouts
+│   App.js
+│
+└───pages
+    About.js
+    Contact.js
+    Home.js
+```
+
+Então, vamos criar as pastas: `components, layouts e pages`
+
+`components\Root.js`
+
+```js
+import React from 'react'
+
+import Routes from './Routes'
+
+const Root = () => <Routes />
+
+export default Root
+```
+
+`components\Routes.js`
+
+```js
+import React from 'react'
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+} from 'react-router-dom'
+
+import About from '../pages/About'
+import Contact from '../pages/Contact'
+import Home from '../pages/Home'
+
+const Routes = () => (
+  <BrowserRouter basename="react-multiples">
+    <Switch>
+      <Route exact path="/" component={Home}/>
+      <Route exact path="/about" component={About}/>
+      <Route exact path="/contact" component={Contact}/>
+    </Switch>
+  </BrowserRouter>
+)
+
+export default Routes
+```
+
+`layouts\App.js`
+
+```js
+import React from 'react'
+import {Link  } from 'react-router-dom'
+
+const App = ({ children }) => (
+  <main>
+    <h1>@mc/react-multiples</h1>
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+        <li>
+          <Link to="/contact">Contact</Link>
+        </li>
+      </ul>
+    </nav>
+    {children}
+  </main>
+)
+
+export default App
+```
+
+`pages\About.js`
+
+```js
+import React from 'react'
+
+import App from '../layouts/App'
+
+const About = () => (
+  <App>
+    <p>About</p>
+  </App>
+)
+
+export default About
+```
+
+`pages\Contact.js`
+
+```js
+import React from 'react'
+
+import App from '../layouts/App'
+
+const Contact = () => (
+  <App>
+    <p>Contact</p>
+  </App>
+)
+
+export default Contact
+```
+
+`pages\Home.js`
+
+```js
+import React from 'react'
+
+import App from '../layouts/App'
+
+const Home = () => (
+  <App>
+    <p>Home</p>
+  </App>
+)
+
+export default Home
+```
+
+Devemos editar o arquivo `mc-react-multiples.js` no `import do Root` e remover a referência do arquivo que deletamos do `set-public-path.js`, deve ficar assim o código final:
+
+```js
+import React from "react";
+import ReactDOM from "react-dom";
+import singleSpaReact from "single-spa-react";
+import Root from "./components/Root";
+
+const lifecycles = singleSpaReact({
+  React,
+  ReactDOM,
+  rootComponent: Root,
+  errorBoundary(err, info, props) {
+    // Customize the root error boundary for your microfrontend here.
+    return null;
+  },
+});
+
+export const { bootstrap, mount, unmount } = lifecycles;
+```
 

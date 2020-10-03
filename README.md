@@ -1,7 +1,12 @@
-# Passo a Passo
+# Passo a Passo Microfrontend com React
+
+Estudo realizado com base no video abaixo referenciado:
 
 Fonte: [https://youtu.be/68LaXOWwxZI](https://youtu.be/68LaXOWwxZI)
-Autor: Matheus Castiglioni
+
+Autor do Video: Matheus Castiglioni
+
+Autor da Documentação Passo a Passo Microfrontend com React: Arlei F. Farnetani Junior
 
 ## Ambiente Inicial (orquestrador)
 

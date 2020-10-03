@@ -18,11 +18,17 @@ registerApplication({
 //   activeWhen: (location) => location.pathname === '/react-single',
 // });
 
-// outra forma de declarar
+// outra forma mais reduzida de declarar o exemplo acima
 registerApplication(
   '@mc/react-single',
   () => System.import('@mc/react-single'),
   location => location.pathname.startsWith('/react-single'),
+);
+
+registerApplication(
+  '@mc/react-multiples',
+  () => System.import('@mc/react-multiples'),
+  location => location.pathname.startsWith('/react-multiples'),
 );
 
 start({

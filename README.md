@@ -1,5 +1,8 @@
 # Passo a Passo
 
+Fonte: [https://youtu.be/68LaXOWwxZI](https://youtu.be/68LaXOWwxZI)
+Autor: Matheus Castiglioni
+
 ## Ambiente Inicial (orquestrador)
 
 Vamos criar o orquestrador, para isso, basta executar o compando npx abaixo:
@@ -354,4 +357,40 @@ E tereos algo como:
 @mc/react-multiples is mounted!
 ```
 
+Agora devemos no nosso `index.ejs` do nosso orquestrador adicionar a aplicação criada conforme abaixo:
 
+```js
+  <% if (isLocal) { %>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@FS/root-config": "//localhost:9000/FS-root-config.js",
+        "@mc/react-single": "//localhost:8500/mc-react-single.js",
+        "@mc/react-multiples": "//localhost:8500/mc-react-multiples.js"
+      }
+    }
+  </script>
+```
+
+E no nosso `FS-root-config.js` devemos registrar o nosso novo microfrontend:
+
+```js
+registerApplication(
+  '@mc/react-multiples',
+  () => System.import('@mc/react-multiples'),
+  location => location.pathname.startsWith('/react-multiples'),
+);
+
+```
+
+Agora para validar se deu tudo certo, devemos acessar o endereço:
+
+```
+http://localhost:9000/react-multiples
+```
+
+Devemos ter o seguinte resultado:
+
+```
+@mc/react-multiples is mounted!
+```

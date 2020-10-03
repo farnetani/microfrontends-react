@@ -241,3 +241,74 @@ root.component.js
 root.component.test.js
 set-public-path.js
 ```
+
+Criar o arquivo `App.js`
+
+Editar o arquivo `mc-react-single.js` e deixar conforme abaixo:
+
+```js{4,9}
+import React from "react";
+import ReactDOM from "react-dom";
+import singleSpaReact from "single-spa-react";
+import Root from "./App";
+
+const lifecycles = singleSpaReact({
+  React,
+  ReactDOM,
+  rootComponent: App,
+});
+
+export const { bootstrap, mount, unmount } = lifecycles;
+
+```
+
+O mais importante do arquivo acima é a seguinte linha:
+
+```js
+export const { bootstrap, mount, unmount } = lifecycles;
+```
+
+Ou seja, obrigatoriamente precisa conter essas 3 funções: `bootstrap, mount, unmount`.
+
+- bootstrap: vai começar a preparar para o nosso app microfrontend ser montado na página.
+- mount: vai adicionar o que a bootstrap fez e renderizar no DOM.
+- unmount: irá remover do DOM o nosso microfrontend.
+
+Para o `react` a `single-spa` tem a `single-spa-react` pronta para usarmos. Aí para essa função, passamos o objeto  abaixo:
+
+```js
+const lifecycles = singleSpaReact({
+  React,
+  ReactDOM,
+  rootComponent: App, //qual seria o nosso primeiro componente que será renderizado na nossa aplicação
+});
+```
+
+No arquivo `App.js` devemos deixar pronto assim:
+
+```js
+import React, { useState } from 'react'
+
+// A propriedade name abaixo será o nome do nosso microfrontend: `@mc/react-single`
+const App = ({ name }) => {
+  const [counter, updateCounter] = useState(0)
+
+  const handleChange = type => {
+    updateCounter(oldCounter => oldCounter + type)
+  }
+
+  return (
+    <>
+      <h1>{name}</h1>
+      <h3>Counter: {counter}</h3>
+      <button onClick={() => handleChange(-1)}>Decrement</button>
+      <button onClick={() => handleChange(1)}>Increment</button>
+    </>
+  )
+}
+
+export default App
+```
+
+Se testarmos a nossa aplicação através da URL: ``, veremos um Counter com a função Decrement e Increment.
+

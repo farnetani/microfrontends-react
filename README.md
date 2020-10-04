@@ -884,3 +884,43 @@ Instalar no nosso microfrontend a lib uuid
 npm i uuid
 ```
 
+## Exemplo 05 - adicionando o parcel (importante)
+
+
+Adicionar em `App.js` o import do parcel:
+
+```js
+import Parcel from 'single-spa-react/parcel'
+```
+
+e para referenciá-lo, devemos usar a tag abaixo:
+```jsx
+      <Parcel
+        config={() => System.import('@mc/react-parcel')}
+      />
+```
+
+Precisamos trocar no arquivo `index.ejs` a porta do `react-parcel` para `8501` e iniciar o mesmo nessa respectiva porta com o comando:
+
+```
+npm start -- --port 8501
+```
+
+E precisamos reiniciar a app `react-route`
+
+```
+cd react-route
+npm start -- --port 8500
+```
+
+Testar abrir: `http://localhost:9000/react-route`, deveremos ter agora o component referenciado no parcel, algo como:
+
+```
+... (aqui antes vem um text input + o botao Add)
+
+@mc/react-parcel
+Id	Task
+```
+
+[https://youtu.be/68LaXOWwxZI?t=2505](https://youtu.be/68LaXOWwxZI?t=2505)
+

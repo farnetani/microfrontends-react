@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Parcel from 'single-spa-react/parcel'
 
 const App = ({ name }) => {
   const [task, updateTask] = useState("");
@@ -20,6 +21,9 @@ const App = ({ name }) => {
         <input onChange={handleChange} value={task} />
         <button>Add</button>
       </form>
+      <Parcel
+        config={() => System.import('@mc/react-parcel')}
+      />
     </>
   );
 };

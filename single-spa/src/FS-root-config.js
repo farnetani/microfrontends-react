@@ -31,10 +31,16 @@ registerApplication(
   location => location.pathname.startsWith('/react-multiples'),
 );
 
+// registerApplication(
+//   '@mc/react-parcel',
+//   () => System.import('@mc/react-parcel'),
+//   location => location.pathname.startsWith('/react-parcel'),
+// );
+
 registerApplication(
-  '@mc/react-parcel',
-  () => System.import('@mc/react-parcel'),
-  location => location.pathname.startsWith('/react-parcel'),
+  '@mc/react-route',
+  () => System.import('@mc/react-route'),
+  location => location.pathname.startsWith('/react-route'),
 );
 
 start({

@@ -744,6 +744,143 @@ const lifecycles = singleSpaReact({
 export const { bootstrap, mount, unmount } = lifecycles;
 ```
 
+## Exemplo-05
 
+App microfrontend usando o parcel anteriormente criado.
 
+```
+npx create-single-spa
+    react-route
+    single-spa application / parcel
+    react
+    npm
+    No
+    mc
+    react-route
+```
+
+```
+Project setup complete!
+Steps to test your React single-spa application:
+1. Run 'npm start -- --port 8500'
+2. Go to http://single-spa-playground.org/playground/instant-test?name=@mc/react-route&url=8500 to see it working!
+``` 
+
+- `index.ejs`
+
+```js
+  <% if (isLocal) { %>
+  <script type="systemjs-importmap">
+    {
+      "imports": {
+        "@FS/root-config": "//localhost:9000/FS-root-config.js",
+        "@mc/react-single": "//localhost:8500/mc-react-single.js",
+        "@mc/react-multiples": "//localhost:8500/mc-react-multiples.js",
+        "@mc/react-parcel": "//localhost:8500/mc-react-parcel.js",
+        "@mc/react-route": "//localhost:8500/mc-react-route.js",
+      }
+    }
+  </script>
+  <% } %>
+```
+
+- `FS-root-config.js`
+
+```js
+registerApplication(
+  '@mc/react-route',
+  () => System.import('@mc/react-route'),
+  location => location.pathname.startsWith('/react-route'),
+);
+```
+
+Importante: no `FS-root-config.js` iremos remover o registro do `react-parcel`, pq não iremos importá-lo ali.
+
+```
+// registerApplication(
+//   '@mc/react-parcel',
+//   () => System.import('@mc/react-parcel'),
+//   location => location.pathname.startsWith('/react-parcel'),
+// );
+```
+
+Abrir o endereço:  `http://localhost:9000/react-route`
+
+deverá resultar: 
+
+```
+@mc/react-route is mounted!
+```
+
+Vamos apagar os arquivos de costume do nosso microfrontend:
+
+```
+.eslintrc
+.prettierignore
+jest.config.js
+src/root.component.js
+src/root.component.test.js
+set-public-path.js
+```
+
+Criar o arquivo `App.js`
+
+```js
+import React, { useState } from 'react'
+
+const App = ({ name }) => {
+  const [task, updateTask] = useState('')
+
+  const handleChange = event => {
+    updateTask(event.target.value)
+  }
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    console.log('SALVANDO...')
+    updateTask('')
+  }
+
+  return (
+    <>
+      <h1>{name}</h1>
+      <form onSubmit={handleSubmit}>
+        <input onChange={handleChange} value={task}/>
+        <button>Add</button>
+      </form>      
+    </>
+  )
+}
+
+export default App
+```
+
+Editar o arquivo ' mc-react-route.js' como nos exemplos anteriores, trocando o root para o app:
+
+```js
+import React from "react";
+import ReactDOM from "react-dom";
+import singleSpaReact from "single-spa-react";
+import App from "./App";
+
+const lifecycles = singleSpaReact({
+  React,
+  ReactDOM,
+  rootComponent: App,
+  errorBoundary(err, info, props) {
+    // Customize the root error boundary for your microfrontend here.
+    return null;
+  },
+});
+
+export const { bootstrap, mount, unmount } = lifecycles;
+```
+
+Recarregar: `http://localhost:9000/react-route`, irá resultar o componente com um text input e um button Add.
+
+Instalar no nosso microfrontend a lib uuid
+
+```
+npm i uuid
+```
 
